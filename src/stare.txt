@@ -1,0 +1,37 @@
+# ruszanie graczem
+if gora and gracz.top != 0:
+    gracz.top -= 10
+if lewo and gracz.left != 0:
+    gracz.left -= 10
+if prawo and gracz.right != SZEROKOSC:
+    gracz.right += 10
+if dol and gracz.bottom != WYSOKOSC:
+    gracz.bottom += 10
+
+
+
+if e.type == KEYDOWN:
+    if e.key == K_q or e.key == K_ESCAPE:
+        zakoncz()
+    if e.key == K_w or e.key == K_UP and gracz.top != 0:
+        gora = True
+        dol = False
+        if e.key == K_a or e.key == K_LEFT and gracz.left != 0:
+            lewo = True
+            prawo = False
+        if e.key == K_s or e.key == K_DOWN and gracz.bottom != SZEROKOSC:
+            dol = True
+            gora = False
+        if e.key == K_d or e.key == K_RIGHT and gracz.right != WYSOKOSC:
+            prawo = True
+            lewo = False
+
+if e.type == KEYUP:
+    if e.key == K_LEFT or e.key == K_a:
+        lewo = False
+    if e.key == K_RIGHT or e.key == K_d:
+        prawo = False
+    if e.key == K_UP or e.key == K_w:
+        gora = False
+    if e.key == K_DOWN or e.key == K_s:
+        dol = False
