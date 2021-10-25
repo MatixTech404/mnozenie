@@ -69,4 +69,4 @@ class Gra:
         EKRAN.blit(opcja1, rect1)
         EKRAN.blit(opcja2, rect2)
         EKRAN.blit(opcja3, rect3)
-        pygame.display.update()
+        pg.display.update()
