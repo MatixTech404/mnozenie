@@ -5,8 +5,8 @@ from pygame.constants import *
 
 
 # kolory
-KTLO = (50, 50, 50)
-KPYT = (200, 200, 200)
+KPYT = (70, 220, 30)
+KODP = (40, 40, 40)
 
 
 pg.init()
@@ -21,7 +21,7 @@ while True:
             pg.quit()
             sys.exit()
     
-    EKRAN.fill(KTLO)
+    EKRAN.fill(KODP)
     PYTANIE = pg.Rect(0, 0, 800, 300)
 
     pg.draw.rect(EKRAN, KPYT, PYTANIE)
