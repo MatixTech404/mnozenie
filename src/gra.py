@@ -3,9 +3,16 @@ import pygame as pg
 import pygame.constants as c
 import silnik as si
 
-CZARNY = (15, 15, 15)
-BIALY = (240, 240, 240)
-K404 = (44, 207, 1)
+# czcionka
+normal = pg.font.SysFont('', 120)
+
+# kolory
+CZARNY    = (15, 15, 15)
+K404      = (44, 207, 1)
+BIALY     = (200, 200, 200)
+KPYT      = (70, 220, 30)
+KODP      = (40, 40, 40)
+KPRZYCISK = (127, 127, 0)
 
 
 class Gra:
@@ -33,40 +40,46 @@ class Gra:
                 self.gracz.centery = e.pos[1]
         return False
 
-    def narysuj_obiekty(self, EKRAN):
+    def utworz_obiekty(self):
+        global pole_pytania, pytanie, pytanie_rect, \
+               przycisk_a, przycisk_b, przycisk_c, \
+               tekst_a, tekst_b, tekst_c, \
+               rect_tekst_a, rect_tekst_b, rect_tekst_c, \
+               a, b
+
         a, b = si.losuj()
 
-        opcja1 = self.font.render(f'{a * a * b}', True, CZARNY, BIALY)
-        opcja2 = self.font.render(f'{a * b}', True, CZARNY, BIALY)
-        opcja3 = self.font.render(f'{a * b * b}', True, CZARNY, BIALY)
+        pole_pytania = pg.Rect(0, 0, 800, 300)
 
-        rect1 = opcja1.get_rect(bottomleft=EKRAN.get_rect().bottomleft)
-        rect2 = opcja2.get_rect(midbottom=EKRAN.get_rect().midbottom)
-        rect3 = opcja3.get_rect(bottomright=EKRAN.get_rect().bottomright)
+        pytanie = normal.render(f'Ile to {a} razy {b}?', True, BIALY)
+        pytanie_rect = pytanie.get_rect(center=(400, 150))
 
-        opcje = [rect1, rect2, rect3]
-        
-        napis = self.font.render(f'{a} X {b} =', True, BIALY, CZARNY)
-        rnapis = napis.get_rect(centerx=EKRAN.get_rect().centerx,
-                                y=0)
-        
-        EKRAN.fill(CZARNY)
-        EKRAN.blit(napis, rnapis)
+        przycisk_a = pg.Rect(50, 350, 167, 200)
+        przycisk_b = pg.Rect(317, 350, 167, 200)
+        przycisk_c = pg.Rect(583, 350, 167, 200)
 
-        # narysuj gracza
-        pg.draw.rect(EKRAN, K404, self.gracz)
+        tekst_a = normal.render(f'{a * a * b}', True, BIALY)
+        tekst_b = normal.render(f'{a * b}', True, BIALY)
+        tekst_c = normal.render(f'{a * b * b}', True, BIALY)
 
-        # sprawdź, czy nie zaszła kolizja
-        for r in opcje:
-            if self.gracz.colliderect(r):
-                if r is rect1:
-                    opcja = 0
-                elif r is rect2:
-                    opcja = 1
-                else:
-                    opcja = 2
+        rect_tekst_a = tekst_a.get_rect(center=(133, 450))
+        rect_tekst_b = tekst_b.get_rect(center=(400, 450))
+        rect_tekst_c = tekst_c.get_rect(center=(666, 450))
 
-        EKRAN.blit(opcja1, rect1)
-        EKRAN.blit(opcja2, rect2)
-        EKRAN.blit(opcja3, rect3)
+    def narysuj_obiekty(self, EKRAN):
+        pg.draw.rect(EKRAN, KPYT, pole_pytania)
+
+        pg.draw.rect(EKRAN, KPRZYCISK, przycisk_a)
+        pg.draw.rect(EKRAN, KPRZYCISK, przycisk_b)
+        pg.draw.rect(EKRAN, KPRZYCISK, przycisk_c)
+
+        EKRAN.blit(tekst_a, rect_tekst_a)
+        EKRAN.blit(tekst_b, rect_tekst_b)
+        EKRAN.blit(tekst_c, rect_tekst_c)
+
+        EKRAN.blit(pytanie, pytanie_rect)
+
+        pg.draw.line(EKRAN, (255, 255, 255), (267, 0), (267, 600))
+        pg.draw.line(EKRAN, (255, 255, 255), (533, 0), (533, 600))
+
         pg.display.update()

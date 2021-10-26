@@ -2,8 +2,8 @@ import random
 
 
 def losuj():
-    a = random.randint(2, 10)
-    b = random.randint(2, 10)
+    a = random.randint(1, 10)
+    b = random.randint(1, 10)
     return a, b
 
 
